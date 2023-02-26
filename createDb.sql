@@ -9,8 +9,7 @@ CREATE TABLE `user` (
 CREATE TABLE `category` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE (`name`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `set` (
@@ -18,8 +17,7 @@ CREATE TABLE `set` (
   `name` varchar(45) NOT NULL,
   `categoryId` int NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`categoryId`) REFERENCES `category`(`id`) ON UPDATE CASCADE ON DELETE CASCADE,
-  CONSTRAINT ucSetNamePerCategory UNIQUE (`name`, `categoryId`)
+  FOREIGN KEY (`categoryId`) REFERENCES `category`(`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `question` (
@@ -35,12 +33,14 @@ CREATE TABLE `answer` (
   `name` varchar(45) NOT NULL,
   `questionId` int NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`questionId`) REFERENCES `question`(`id`) ON UPDATE CASCADE ON DELETE CASCADE,
-  CONSTRAINT ucAnswersPerQuestion UNIQUE (`name`, `questionId`)
+  FOREIGN KEY (`questionId`) REFERENCES `question`(`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-ALTER TABLE `question`
-ADD `correctAnswer` int NOT NULL;
-
-ALTER TABLE `question`
-ADD FOREIGN KEY (`correctAnswer`) REFERENCES `answer`(`id`) ON UPDATE CASCADE ON DELETE CASCADE;
+CREATE TABLE `correctAnswer` (
+  `questionId` int NOT NULL,
+  `answerId` int NOT NULL,
+  FOREIGN KEY (`questionId`) REFERENCES `question`(`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (`answerId`) REFERENCES `answer`(`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT pkCorrectAnswer PRIMARY KEY (`questionId`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  
