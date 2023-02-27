@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
      */
 
-    $setId = mysqli_insert_id($dbConn);
+    $setId = $id;
 
     $sql = "SELECT id, name FROM `set` WHERE id = '" . $setId . "' LIMIT 1";
 	$rows = dbSelect($dbConn, $sql);

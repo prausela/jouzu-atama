@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
      */
 
-    $categoryId = mysqli_insert_id($dbConn);
+    $categoryId = $id;
 
     $sql = "SELECT id, name FROM category WHERE id = '" . $categoryId . "' LIMIT 1";
 	$rows = dbSelect($dbConn, $sql);
