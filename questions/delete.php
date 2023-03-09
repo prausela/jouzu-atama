@@ -70,7 +70,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         Delete category query
      */
 	
-	$sql = "DELETE FROM `set` WHERE id = '" . $id . "' AND categoryId = '" . $categoryId . "'";
+	$sql = "DELETE FROM `question` WHERE id = '" . $id . "' AND setId = '" . $setId . "'";
+	
+	$result = dbQuery($dbConn, $sql);
+
+    if (!$result) {
+        closeConn($dbConn);
+        http_response_code(404);
+        exit();
+    }
+
+    $sql = "DELETE FROM `correctAnswer` WHERE questionId = '" . $id . "'";
+	
+	$result = dbQuery($dbConn, $sql);
+
+    if (!$result) {
+        closeConn($dbConn);
+        http_response_code(404);
+        exit();
+    }
+
+    $sql = "DELETE FROM `answer` WHERE questionId = '" . $id . "'";
 	
 	$result = dbQuery($dbConn, $sql);
 
