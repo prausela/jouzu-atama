@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $answers = array();
 
-    if (!is_array($data->answers) || count($data->answers) < 3) {
+    if (!is_array($data->answers) || count($data->answers) < 2) {
         closeConn($dbConn);
 		http_response_code(400);
 		exit();
@@ -204,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }  
 
-    if (count($answers) < 3) {
+    if (count($answers) < 2) {
         closeConn($dbConn);
         http_response_code(500);
         exit();
