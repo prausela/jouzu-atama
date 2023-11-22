@@ -75,19 +75,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	}
 
 	$name = trim(mysqli_real_escape_string($dbConn, $data->name));
+    $visibility = trim(mysqli_real_escape_string($dbConn, $data->visibility));
     $id   = trim(mysqli_real_escape_string($dbConn, $params['id']));
 
-	if ($name === "" || $id === ""){
+	if ($name === "" || $id === "" || ($visibility !== "visible" && $visibility !== "invisible")){
 		closeConn($dbConn);
 		http_response_code(400);
 		exit();
 	}
 
+    $visibility = $visibility === "visible" ? "TRUE" : "FALSE";
+
     /* 
         Update category in database
      */
 	
-	$sql = "UPDATE `set` SET name = ('" . $name . "') WHERE id = '" . $id . "' AND categoryId = '" . $categoryId . "'";
+	$sql = "UPDATE `set` SET name = ('" . $name . "'), visibility = (" . $visibility . ") WHERE id = '" . $id . "' AND categoryId = '" . $categoryId . "'";
 	
 	$result = dbQuery($dbConn, $sql);
 
@@ -106,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
      */
 
-    $sql = "SELECT id, name, visible FROM `set` WHERE name = '" . $name . "' LIMIT 1";
+    $sql = "SELECT id, name, visibility FROM `set` WHERE name = '" . $name . "' LIMIT 1";
 	$rows = dbSelect($dbConn, $sql);
 
     if ($rows === false){
@@ -121,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     } else {
         $rows = $rows[0];
-        $rows['visible'] = $rows['visible'] == "1" ? true : false;
+        $rows['visibility'] = $rows['visibility'] == "1" ? "visible" : "invisible";
         $rows['questions_url'] = get_protocol($_SERVER) . $_SERVER['SERVER_NAME'] . "/categories/" . $categoryId . "/sets/" . $rows['id'] . "/questions/get";
     }
 
