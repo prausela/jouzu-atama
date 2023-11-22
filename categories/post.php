@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $categoryId = mysqli_insert_id($dbConn);
 
-    $sql = "SELECT id, name, visible FROM category WHERE id = '" . $categoryId . "' LIMIT 1";
+    $sql = "SELECT id, name, visibility FROM category WHERE id = '" . $categoryId . "' LIMIT 1";
 	$rows = dbSelect($dbConn, $sql);
 
     if ($rows === false){
@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     } else {
         $rows = $rows[0];
-        $rows['visible'] = $rows['visible'] == "1" ? true : false;
+        $rows['visibility'] = $rows['visibility'] == "1" ? "visible" : "invisible";
         $rows['sets_url'] = get_protocol($_SERVER) . $_SERVER['SERVER_NAME'] . "/categories/" . $rows['id'] . "/sets/get";
     }
 

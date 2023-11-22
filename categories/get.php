@@ -9,7 +9,7 @@ require_once 'url_utils.php';
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $sql = "";
     if(!has_url_param($params, 'id')){
-        $sql = "SELECT id, name, visible FROM category";
+        $sql = "SELECT id, name, visibility FROM category";
     } else {
         $id   = trim(mysqli_real_escape_string($dbConn, $params['id']));
 
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             exit();
         }
 
-        $sql = "SELECT id, name, visible FROM category WHERE id = '" . $id . "' LIMIT 1";
+        $sql = "SELECT id, name, visibility FROM category WHERE id = '" . $id . "' LIMIT 1";
     }
     
     $rows = dbSelect($dbConn, $sql);
@@ -37,12 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             exit();
         } else {
             $rows = $rows[0];
-            $rows['visible'] = $rows['visible'] == "1" ? true : false;
+            $rows['visibility'] = $rows['visibility'] == "1" ? "visible" : "invisible";
             $rows['sets_url'] = get_protocol($_SERVER) . $_SERVER['SERVER_NAME'] . "/categories/" . $rows['id'] . "/sets/get";
         }
     } else {
         foreach ($rows as &$row) {
-            $row['visible'] = $row['visible'] == "1" ? true : false;
+            $row['visibility'] = $row['visibility'] == "1" ? "visible" : "invisible";
             $row['set_url'] = get_protocol($_SERVER) . $_SERVER['SERVER_NAME'] . "/categories/" . $row['id'] . "/sets/get";
         }
     }
