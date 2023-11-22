@@ -178,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
      */
 
-    $sql = "SELECT `question`.`id`, `question`.`name` FROM `question` WHERE `question`.`id` = '" . $questionId . "' LIMIT 1";
+    $sql = "SELECT `question`.`id`, `question`.`name`, `question`.`visible` FROM `question` WHERE `question`.`id` = '" . $questionId . "' LIMIT 1";
 	$rows = dbSelect($dbConn, $sql);
 
     if ($rows === false){
@@ -194,6 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $rows = $rows[0];
+    $rows['visible'] = $rows['visible'] == "1" ? true : false;
 
     $sql = "SELECT `answer`.`id`, `answer`.`name` FROM `answer` WHERE `answer`.`questionId` = '" . $questionId . "'";
     $answers = dbSelect($dbConn, $sql);
