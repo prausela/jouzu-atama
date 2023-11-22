@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $sql = "";
     if(!has_url_param($params, 'id')){
-        $sql = "SELECT `question`.`id`, `question`.`name` FROM `question` INNER JOIN `set` ON `question`.`setId` = `set`.`id` WHERE setId = '" . $setId . "' AND categoryId = '" . $categoryId ."'";
+        $sql = "SELECT `question`.`id`, `question`.`name`, `question`.`visible` FROM `question` INNER JOIN `set` ON `question`.`setId` = `set`.`id` WHERE setId = '" . $setId . "' AND categoryId = '" . $categoryId ."'";
     } else {
         $id   = trim(mysqli_real_escape_string($dbConn, $params['id']));
 
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             exit();
         }
 
-        $sql = "SELECT `question`.`id`, `question`.`name` FROM `question` INNER JOIN `set` ON `question`.`setId` = `set`.`id` WHERE `question`.`id` = '" . $id . "' AND categoryId = '" . $categoryId . "' AND setId ='" . $setId . "' LIMIT 1";
+        $sql = "SELECT `question`.`id`, `question`.`name`, `question`.`visible` FROM `question` INNER JOIN `set` ON `question`.`setId` = `set`.`id` WHERE `question`.`id` = '" . $id . "' AND categoryId = '" . $categoryId . "' AND setId ='" . $setId . "' LIMIT 1";
     }
     
     $rows = dbSelect($dbConn, $sql);
@@ -65,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             exit();
         } else {
             $rows = $rows[0];
+            $rows['visible'] = $rows['visible'] == "1" ? true : false;
 
             $sql = "SELECT `answer`.`id`, `answer`.`name` FROM `answer` WHERE `answer`.`questionId` = '" . $id . "'";
             $answers = dbSelect($dbConn, $sql);
@@ -138,6 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 exit();
             }
 
+            $row['visible'] = $row['visible'] == "1" ? true : false;
             $row['answers'] = array();
 
             foreach ($answers as &$answer) {
