@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $sql = "";
     if(!has_url_param($params, 'id')){
-        $sql = "SELECT id, name FROM `set` WHERE categoryId = '" . $categoryId . "'";
+        $sql = "SELECT id, name, visible FROM `set` WHERE categoryId = '" . $categoryId . "'";
     } else {
         $id   = trim(mysqli_real_escape_string($dbConn, $params['id']));
 
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             exit();
         }
 
-        $sql = "SELECT id, name FROM `set` WHERE id = '" . $id . "' AND categoryId = '" . $categoryId . "' LIMIT 1";
+        $sql = "SELECT id, name, visible FROM `set` WHERE id = '" . $id . "' AND categoryId = '" . $categoryId . "' LIMIT 1";
     }
     
     $rows = dbSelect($dbConn, $sql);
@@ -51,10 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             exit();
         } else {
             $rows = $rows[0];
+            $rows['visible'] = $rows['visible'] == "1" ? true : false;
             $rows['questions_url'] = get_protocol($_SERVER) . $_SERVER['SERVER_NAME'] . "/categories/" . $categoryId . "/sets/" . $rows['id'] . "/questions/get";
         }
     } else {
         foreach ($rows as &$row) {
+            $row['visible'] = $row['visible'] == "1" ? true : false;
             $row['questions_url'] = get_protocol($_SERVER) . $_SERVER['SERVER_NAME'] . "/categories/" . $categoryId . "/sets/" . $row['id'] . "/questions/get";
         }
     }
