@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 exit();
             }  
 
-            if (count($answers) < 2) {
+            if (count($answers) < 1) {
                 closeConn($dbConn);
                 http_response_code(500);
                 exit();
@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 exit();
             }  
 
-            if (count($answers) < 3) {
+            if (count($answers) < 2) {
                 closeConn($dbConn);
                 http_response_code(500);
                 exit();
