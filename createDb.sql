@@ -46,3 +46,6 @@ CREATE TABLE `correctAnswer` (
 
 ALTER TABLE `category` 
 ADD `position` int NOT NULL;
+
+ALTER TABLE `set` 
+ADD `position` int NOT NULL;
