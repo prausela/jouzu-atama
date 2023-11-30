@@ -52,6 +52,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		exit();
 	}
 
+    $sql = "SELECT position FROM `set` WHERE id = '" . $id . "' AND categoryId = '" . $categoryId . "' LIMIT 1";
+	$rows = dbSelect($dbConn, $sql);
+
+    if ($rows === false){
+        closeConn($dbConn);
+        http_response_code(404);
+        exit();
+    }
+
+    if (count($rows) < 1) {
+        closeConn($dbConn);
+        http_response_code(404);
+        exit();
+    } else {
+        $rows = $rows[0];
+        $position = ((int) $rows["position"]);
+    }
+
+    $sql = "UPDATE `set` SET position = position - 1 WHERE position > '" . $position . "' AND categoryId = '" . $categoryId . "'";
+	
+	$result = dbQuery($dbConn, $sql);
+
+    if (!$result) {
+        closeConn($dbConn);
+        http_response_code(409);
+        exit();
+    }
+
     /* 
         Delete category query
      */
