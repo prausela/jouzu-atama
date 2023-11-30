@@ -9,7 +9,7 @@ require_once 'url_utils.php';
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $sql = "";
     if(!has_url_param($params, 'id')){
-        $sql = "SELECT id, name, visibility FROM category";
+        $sql = "SELECT id, name, position, visibility FROM category";
     } else {
         $id   = trim(mysqli_real_escape_string($dbConn, $params['id']));
 
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             exit();
         }
 
-        $sql = "SELECT id, name, visibility FROM category WHERE id = '" . $id . "' LIMIT 1";
+        $sql = "SELECT id, name, position, visibility FROM category WHERE id = '" . $id . "' LIMIT 1";
     }
     
     $rows = dbSelect($dbConn, $sql);

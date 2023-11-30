@@ -43,4 +43,6 @@ CREATE TABLE `correctAnswer` (
   FOREIGN KEY (`answerId`) REFERENCES `answer`(`id`) ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT pkCorrectAnswer PRIMARY KEY (`questionId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-  
+
+ALTER TABLE `category` 
+ADD `position` int NOT NULL;

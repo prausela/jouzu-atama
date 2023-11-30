@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $data = json_decode(file_get_contents("php://input", true));
 
-    if (!$data || !isset($data->name) || !isset($data->visibility)) {
+    if (!$data || !isset($data->name) || !isset($data->visibility) || !isset($data->position) || !is_numeric($data->position)) {
 		closeConn($dbConn);
 		http_response_code(400);
 		exit();
@@ -48,6 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	$name = trim(mysqli_real_escape_string($dbConn, $data->name));
     $visibility = trim(mysqli_real_escape_string($dbConn, $data->visibility));
+    if (is_int($data->position)){
+        $new_position = (int) $data->position;
+    } else {
+        $new_position = (int) trim(mysqli_real_escape_string($dbConn, $data->position));
+    }
     $id   = trim(mysqli_real_escape_string($dbConn, $params['id']));
 
 	if ($name === "" || $id === "" || ($visibility !== "visible" && $visibility !== "invisible")){
@@ -58,11 +63,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $visibility = $visibility === "visible" ? "TRUE" : "FALSE";
 
+    $sql = "SELECT position FROM category ORDER BY position DESC LIMIT 1";
+	$rows = dbSelect($dbConn, $sql);
+
+    if (count($rows) < 1) {
+        closeConn($dbConn);
+        http_response_code(404);
+        exit();
+    } else {
+        $rows = $rows[0];
+        $last_position = ((int) $rows["position"]);
+    }
+
+    if ($new_position > $last_position) {
+        closeConn($dbConn);
+		http_response_code(400);
+		exit();
+    }
+
+    $sql = "SELECT position FROM category WHERE id = '" . $id . "' LIMIT 1";
+	$rows = dbSelect($dbConn, $sql);
+
+    if (count($rows) < 1) {
+        closeConn($dbConn);
+        http_response_code(404);
+        exit();
+    } else {
+        $rows = $rows[0];
+        $old_position = ((int) $rows["position"]);
+    }
+
+    if ($old_position > $new_position) {
+        $sql = "UPDATE category SET position = position + 1 WHERE position >= '" . $new_position . "' AND position < '" . $old_position . "'";
+	
+        $result = dbQuery($dbConn, $sql);
+
+        if (!$result) {
+            closeConn($dbConn);
+            http_response_code(500);
+            exit();
+        }
+    } elseif ($old_position < $new_position) {
+        $sql = "UPDATE category SET position = position - 1 WHERE position > '" . $old_position . "' AND position <= '" . $new_position . "'";
+	
+        $result = dbQuery($dbConn, $sql);
+
+        if (!$result) {
+            closeConn($dbConn);
+            http_response_code(500);
+            exit();
+        }
+    }
+
     /* 
         Update category in database
      */
 	
-	$sql = "UPDATE category SET name = ('" . $name . "'), visibility = (" . $visibility . ") WHERE id = '" . $id . "'";
+	$sql = "UPDATE category SET name = ('" . $name . "'), visibility = (" . $visibility . "), position = ('" . $new_position . "') WHERE id = '" . $id . "'";
 	
 	$result = dbQuery($dbConn, $sql);
 
@@ -83,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $categoryId = $id;
 
-    $sql = "SELECT id, name, visibility FROM category WHERE id = '" . $categoryId . "' LIMIT 1";
+    $sql = "SELECT id, name, position, visibility FROM category WHERE id = '" . $categoryId . "' LIMIT 1";
 	$rows = dbSelect($dbConn, $sql);
 
     if ($rows === false){

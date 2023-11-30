@@ -47,12 +47,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		http_response_code(400);
 		exit();
 	}
+
+    $sql = "SELECT position FROM category ORDER BY position DESC LIMIT 1";
+	$rows = dbSelect($dbConn, $sql);
+
+    if (count($rows) < 1) {
+        closeConn($dbConn);
+        http_response_code(404);
+        exit();
+    } else {
+        $rows = $rows[0];
+        $position = ((int) $rows["position"]) + 1;
+    }
 	
     /* 
         Insert into database
      */
 
-	$sql = "INSERT INTO category(name) VALUES('" . $name . "')";
+	$sql = "INSERT INTO category(name, position) VALUES('" . $name . "', '" . $position . "')";
 	
 	$result = dbQuery($dbConn, $sql);
 
@@ -73,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $categoryId = mysqli_insert_id($dbConn);
 
-    $sql = "SELECT id, name, visibility FROM category WHERE id = '" . $categoryId . "' LIMIT 1";
+    $sql = "SELECT id, name, position, visibility FROM category WHERE id = '" . $categoryId . "' LIMIT 1";
 	$rows = dbSelect($dbConn, $sql);
 
     if ($rows === false){
