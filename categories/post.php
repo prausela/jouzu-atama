@@ -52,9 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$rows = dbSelect($dbConn, $sql);
 
     if (count($rows) < 1) {
-        closeConn($dbConn);
-        http_response_code(404);
-        exit();
+        $position = 0;
     } else {
         $rows = $rows[0];
         $position = ((int) $rows["position"]) + 1;
