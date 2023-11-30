@@ -61,12 +61,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		http_response_code(400);
 		exit();
 	}
+
+    $sql = "SELECT position FROM `set` WHERE categoryId = '" . $categoryId . "' ORDER BY position DESC LIMIT 1";
+	$rows = dbSelect($dbConn, $sql);
+
+    if (count($rows) < 1) {
+        $position = 0;
+    } else {
+        $rows = $rows[0];
+        $position = ((int) $rows["position"]) + 1;
+    }
 	
     /* 
         Insert into database
      */
 
-	$sql = "INSERT INTO `set`(name, categoryId) VALUES('" . $name . "', '" . $categoryId . "')";
+	$sql = "INSERT INTO `set`(name, categoryId, position) VALUES('" . $name . "', '" . $categoryId . "', '" . $position . "')";
 	
 	$result = dbQuery($dbConn, $sql);
 
@@ -87,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $setId = mysqli_insert_id($dbConn);
 
-    $sql = "SELECT id, name, visibility FROM `set` WHERE id = '" . $setId . "' LIMIT 1";
+    $sql = "SELECT id, name, position, visibility FROM `set` WHERE id = '" . $setId . "' LIMIT 1";
 	$rows = dbSelect($dbConn, $sql);
 
     if ($rows === false){
