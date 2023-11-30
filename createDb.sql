@@ -44,6 +44,15 @@ CREATE TABLE `correctAnswer` (
   CONSTRAINT pkCorrectAnswer PRIMARY KEY (`questionId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+ALTER TABLE `category`
+ADD `visibility` BOOLEAN NOT NULL DEFAULT FALSE;
+
+ALTER TABLE `set`
+ADD `visibility` BOOLEAN NOT NULL DEFAULT FALSE;
+
+ALTER TABLE `question`
+ADD `visibility` BOOLEAN NOT NULL DEFAULT TRUE;
+
 ALTER TABLE `category` 
 ADD `position` int NOT NULL;
 
