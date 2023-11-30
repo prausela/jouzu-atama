@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $sql = "";
     if(!has_url_param($params, 'id')){
-        $sql = "SELECT id, name, visibility FROM `set` WHERE categoryId = '" . $categoryId . "'";
+        $sql = "SELECT id, name, position, visibility FROM `set` WHERE categoryId = '" . $categoryId . "'";
     } else {
         $id   = trim(mysqli_real_escape_string($dbConn, $params['id']));
 
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             exit();
         }
 
-        $sql = "SELECT id, name, visibility FROM `set` WHERE id = '" . $id . "' AND categoryId = '" . $categoryId . "' LIMIT 1";
+        $sql = "SELECT id, name, position, visibility FROM `set` WHERE id = '" . $id . "' AND categoryId = '" . $categoryId . "' LIMIT 1";
     }
     
     $rows = dbSelect($dbConn, $sql);
