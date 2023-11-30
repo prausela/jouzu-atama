@@ -41,6 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sql = "SELECT position FROM category WHERE id = '" . $id . "' LIMIT 1";
 	$rows = dbSelect($dbConn, $sql);
 
+    if ($rows === false){
+        closeConn($dbConn);
+        http_response_code(404);
+        exit();
+    }    
+
     if (count($rows) < 1) {
         closeConn($dbConn);
         http_response_code(404);
