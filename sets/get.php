@@ -21,9 +21,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit();
     }
 
+    $order_by = "";
+    if (isset($_GET["sort"])) {
+        $sort     = trim(mysqli_real_escape_string($dbConn, $_GET["sort"]));
+        $order_by = " ORDER BY " . $sort . " ASC";
+    }
+
     $sql = "";
     if(!has_url_param($params, 'id')){
-        $sql = "SELECT id, name, position, visibility FROM `set` WHERE categoryId = '" . $categoryId . "'";
+        $sql = "SELECT id, name, position, visibility FROM `set` WHERE categoryId = '" . $categoryId . "'" . $order_by;
     } else {
         $id   = trim(mysqli_real_escape_string($dbConn, $params['id']));
 
@@ -33,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             exit();
         }
 
-        $sql = "SELECT id, name, position, visibility FROM `set` WHERE id = '" . $id . "' AND categoryId = '" . $categoryId . "' LIMIT 1";
+        $sql = "SELECT id, name, position, visibility FROM `set` WHERE id = '" . $id . "' AND categoryId = '" . $categoryId . "'" . $order_by . " LIMIT 1" ;
     }
     
     $rows = dbSelect($dbConn, $sql);
