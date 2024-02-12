@@ -124,30 +124,6 @@ class Route {
 
 $route = new Route();
 
-$route->add("/users/login",             "users/login.php");
-$route->add("/users/register",          "users/register.php");
-
-$route->add("/categories/get",          "categories/get.php");
-$route->add("/categories/post",         "categories/post.php");
-
-$route->add("/categories/{id}/get",     "categories/get.php");
-$route->add("/categories/{id}/put",     "categories/put.php");
-$route->add("/categories/{id}/delete",  "categories/delete.php");
-
-$route->add("/categories/{categoryId}/sets/get",          "sets/get.php");
-$route->add("/categories/{categoryId}/sets/post",         "sets/post.php");
-
-$route->add("/categories/{categoryId}/sets/{id}/get",     "sets/get.php");
-$route->add("/categories/{categoryId}/sets/{id}/put",     "sets/put.php");
-$route->add("/categories/{categoryId}/sets/{id}/delete",  "sets/delete.php");
-
-$route->add("/categories/{categoryId}/sets/{setId}/questions/get",          "questions/get.php");
-$route->add("/categories/{categoryId}/sets/{setId}/questions/post",         "questions/post.php");
-
-$route->add("/categories/{categoryId}/sets/{setId}/questions/{id}/get",     "questions/get.php");
-//$route->add("/categories/{categoryId}/sets/{setId}/questions/{id}/put",     "questions/put.php");
-$route->add("/categories/{categoryId}/sets/{setId}/questions/{id}/delete",  "questions/delete.php");
-
 // v0
 $route->add("/v0/users/login",             "v0/users/login.php");
 $route->add("/v0/users/register",          "v0/users/register.php");
