@@ -1,6 +1,6 @@
 <?php
 
-require_once "secrets.php";
+require_once "v0/secrets.php";
 
 function generate_jwt($headers, $payload) {
 	$secret = get_jwt_secret();

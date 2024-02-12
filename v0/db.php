@@ -1,6 +1,6 @@
 <?php
 
-require_once "secrets.php";
+require_once "v0/secrets.php";
 	
 $dbConn = mysqli_connect($db_host, $db_name, $db_user, $db_pass);
 mysqli_set_charset($dbConn, 'utf8');

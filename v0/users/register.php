@@ -2,7 +2,7 @@
 
 header("Access-Control-Allow-Methods: POST");
 
-require_once 'db.php';
+require_once 'v0/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	// get posted data
