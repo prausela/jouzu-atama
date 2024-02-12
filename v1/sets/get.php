@@ -6,6 +6,22 @@ require_once 'v1/db.php';
 require_once 'v1/jwt_utils.php';
 require_once 'v1/url_utils.php';
 
+$bearer_token = get_bearer_token();
+
+if(!$bearer_token){
+    closeConn($dbConn);
+    http_response_code(401);
+    exit();
+}
+
+$is_jwt_valid = is_jwt_valid($bearer_token);
+
+if (!$is_jwt_valid){
+    closeConn($dbConn);
+    http_response_code(401);
+    exit();
+}
+
 if(!has_url_param($params, 'categoryId')) {
     closeConn($dbConn);
     http_response_code(400);
