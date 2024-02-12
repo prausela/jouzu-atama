@@ -4,6 +4,30 @@ header("Access-Control-Allow-Methods: POST");
 
 require_once 'v1/db.php';
 
+$bearer_token = get_bearer_token();
+
+if(!$bearer_token){
+    closeConn($dbConn);
+    http_response_code(401);
+    exit();
+}
+
+$is_jwt_valid = is_jwt_valid($bearer_token);
+
+if (!$is_jwt_valid){
+    closeConn($dbConn);
+    http_response_code(401);
+    exit();
+}
+
+$user = get_user_from_token($bearer_token);
+
+if ($user !== "hika") {
+    closeConn($dbConn);
+    http_response_code(401);
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	// get posted data
 	$data = json_decode(file_get_contents("php://input", true));
