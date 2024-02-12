@@ -149,6 +149,33 @@ $route->add("/v0/categories/{categoryId}/sets/{setId}/questions/{id}/get",     "
 //$route->add("/v0/categories/{categoryId}/sets/{setId}/questions/{id}/put",     "v0/questions/put.php");
 $route->add("/v0/categories/{categoryId}/sets/{setId}/questions/{id}/delete",  "v0/questions/delete.php");
 
+
+// v1
+$route->add("/v1/users/login",             "v1/users/login.php");
+$route->add("/v1/users/register",          "v1/users/register.php");
+
+$route->add("/v1/categories/get",          "v1/categories/get.php");
+$route->add("/v1/categories/post",         "v1/categories/post.php");
+
+$route->add("/v1/categories/{id}/get",     "v1/categories/get.php");
+$route->add("/v1/categories/{id}/put",     "v1/categories/put.php");
+$route->add("/v1/categories/{id}/delete",  "v1/categories/delete.php");
+
+$route->add("/v1/categories/{categoryId}/sets/get",          "v1/sets/get.php");
+$route->add("/v1/categories/{categoryId}/sets/post",         "v1/sets/post.php");
+
+$route->add("/v1/categories/{categoryId}/sets/{id}/get",     "v1/sets/get.php");
+$route->add("/v1/categories/{categoryId}/sets/{id}/put",     "v1/sets/put.php");
+$route->add("/v1/categories/{categoryId}/sets/{id}/delete",  "v1/sets/delete.php");
+
+$route->add("/v1/categories/{categoryId}/sets/{setId}/questions/get",          "v1/questions/get.php");
+$route->add("/v1/categories/{categoryId}/sets/{setId}/questions/post",         "v1/questions/post.php");
+
+$route->add("/v1/categories/{categoryId}/sets/{setId}/questions/{id}/get",     "v1/questions/get.php");
+//$route->add("/v1/categories/{categoryId}/sets/{setId}/questions/{id}/put",     "v1/questions/put.php");
+$route->add("/v1/categories/{categoryId}/sets/{setId}/questions/{id}/delete",  "v1/questions/delete.php");
+
+
 $route->notFound("404.php");
 
 ?>
