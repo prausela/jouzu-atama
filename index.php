@@ -156,6 +156,7 @@ $route->add("/v1/users/get",               "v1/users/get.php");
 $route->add("/v1/users/post",              "v1/users/post.php");
 
 $route->add("/v1/users/{username}/get",    "v1/users/get.php");
+$route->add("/v1/users/{username}/put",    "v1/users/put.php");
 $route->add("/v1/users/{username}/delete", "v1/users/delete.php");
 
 $route->add("/v1/categories/get",          "v1/categories/get.php");
