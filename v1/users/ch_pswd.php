@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		exit();
 	}
 	
-	$sql = "UPDATE user SET password = ('" . $password . "'), reset = (" . $reset . ") WHERE username = '" . $username . "'";
+	$sql = "UPDATE user SET password = ('" . password_hash($password, PASSWORD_DEFAULT) . "'), reset = (" . $reset . ") WHERE username = '" . $username . "'";
 	
 	$result = dbQuery($dbConn, $sql);
 
