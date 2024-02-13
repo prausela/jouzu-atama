@@ -54,8 +54,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$role = "admin";
 	}
 
+	$reset = "yes";
+	if ($row['reset'] === "0") {
+		$reset = "no";
+	}
+
 	http_response_code(200);
-	echo json_encode(array('token' => $jwt, 'role' => $role), JSON_UNESCAPED_SLASHES);
+	echo json_encode(array('token' => $jwt, 'role' => $role, 'reset' => $reset), JSON_UNESCAPED_SLASHES);
 	exit();
 }
 
