@@ -3,6 +3,7 @@
 header("Access-Control-Allow-Methods: POST");
 
 require_once 'v1/db.php';
+require_once 'v1/jwt_utils.php';
 
 $bearer_token = get_bearer_token();
 
