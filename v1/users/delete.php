@@ -30,17 +30,15 @@ if ($user !== "hika") {
     exit();
 }
 
+if(!has_url_param($params, 'username')) {
+    closeConn($dbConn);
+    http_response_code(400);
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $data = json_decode(file_get_contents("php://input", true));
-
-    if (!$data || !isset($data->username)) {
-		closeConn($dbConn);
-		http_response_code(400);
-		exit();
-	}
-
-    $username   = trim(mysqli_real_escape_string($dbConn, $data->username));
+    $username   = trim(mysqli_real_escape_string($dbConn, $params['username']));
 
     if ($username === "" || $username === "hika"){
 		closeConn($dbConn);
