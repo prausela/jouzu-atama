@@ -58,3 +58,9 @@ ADD `position` int NOT NULL;
 
 ALTER TABLE `set` 
 ADD `position` int NOT NULL;
+
+ALTER TABLE `user`
+ADD `reset` BOOLEAN NOT NULL DEFAULT TRUE;
+
+ALTER TABLE `user`
+ADD `name` varchar(45) NOT NULL;

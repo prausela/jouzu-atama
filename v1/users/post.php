@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	// get posted data
 	$data = json_decode(file_get_contents("php://input", true));
 
-	if (!$data || !isset($data->username) || !isset($data->password)) {
+	if (!$data || !isset($data->username) || !isset($data->password) || !isset($data->name)) {
 		closeConn($dbConn);
 		http_response_code(400);
 		exit();
@@ -40,14 +40,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	$username = trim(mysqli_real_escape_string($dbConn, $data->username));
 	$password = trim(mysqli_real_escape_string($dbConn, $data->password));
+	$name = trim(mysqli_real_escape_string($dbConn, $data->name));
 
-	if ($username === "" || $password === ""){
+	if ($username === "" || $password === "" || $name === ""){
 		closeConn($dbConn);
 		http_response_code(400);
 		exit();
 	}
 	
-	$sql = "INSERT INTO user(username, password) VALUES('" . $username . "', '" . password_hash($password, PASSWORD_DEFAULT) . "')";
+	$sql = "INSERT INTO user(username, password, name) VALUES('" . $username . "', '" . password_hash($password, PASSWORD_DEFAULT) . "', '" . $name . "')";
 	
 	$result = dbQuery($dbConn, $sql);
 
@@ -57,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-	$sql = "SELECT id, username FROM user WHERE username = '" . $username . "' LIMIT 1";
+	$sql = "SELECT id, username, name FROM user WHERE username = '" . $username . "' LIMIT 1";
 	$rows = dbSelect($dbConn, $sql);
 
     if ($rows === false){
