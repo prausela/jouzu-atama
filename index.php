@@ -151,20 +151,22 @@ $route->add("/v0/categories/{categoryId}/sets/{setId}/questions/{id}/delete",  "
 
 
 // v1
-$route->add("/v1/users/login",             "v1/users/login.php");
-$route->add("/v1/users/get",               "v1/users/get.php");
-$route->add("/v1/users/post",              "v1/users/post.php");
+$route->add("/v1/users/login",                              "v1/users/login.php");
+$route->add("/v1/users/get",                                "v1/users/get.php");
+$route->add("/v1/users/post",                               "v1/users/post.php");
 
-$route->add("/v1/users/{username}/get",    "v1/users/get.php");
-$route->add("/v1/users/{username}/put",    "v1/users/put.php");
-$route->add("/v1/users/{username}/delete", "v1/users/delete.php");
+$route->add("/v1/users/{username}/get",                     "v1/users/get.php");
+$route->add("/v1/users/{username}/put",                     "v1/users/put.php");
+$route->add("/v1/users/{username}/delete",                  "v1/users/delete.php");
 
-$route->add("/v1/categories/get",          "v1/categories/get.php");
-$route->add("/v1/categories/post",         "v1/categories/post.php");
+$route->add("/v1/users/{username}/password/put",            "v1/users/ch_pswd.php");
 
-$route->add("/v1/categories/{id}/get",     "v1/categories/get.php");
-$route->add("/v1/categories/{id}/put",     "v1/categories/put.php");
-$route->add("/v1/categories/{id}/delete",  "v1/categories/delete.php");
+$route->add("/v1/categories/get",                           "v1/categories/get.php");
+$route->add("/v1/categories/post",                          "v1/categories/post.php");
+
+$route->add("/v1/categories/{id}/get",                      "v1/categories/get.php");
+$route->add("/v1/categories/{id}/put",                      "v1/categories/put.php");
+$route->add("/v1/categories/{id}/delete",                   "v1/categories/delete.php");
 
 $route->add("/v1/categories/{categoryId}/sets/get",          "v1/sets/get.php");
 $route->add("/v1/categories/{categoryId}/sets/post",         "v1/sets/post.php");
