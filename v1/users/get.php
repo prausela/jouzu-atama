@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             exit();
         }
 
-        $sql = "SELECT username FROM user";
+        $sql = "SELECT username, name FROM user";
     } else {
         $username   = trim(mysqli_real_escape_string($dbConn, $params['username']));
         
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             exit();
         }
 
-        $sql = "SELECT username FROM user WHERE id = '" . $id . "' LIMIT 1";
+        $sql = "SELECT username, name FROM user WHERE id = '" . $id . "' LIMIT 1";
     }
     
     $rows = dbSelect($dbConn, $sql);
