@@ -152,8 +152,11 @@ $route->add("/v0/categories/{categoryId}/sets/{setId}/questions/{id}/delete",  "
 
 // v1
 $route->add("/v1/users/login",             "v1/users/login.php");
-$route->add("/v1/users/register",          "v1/users/register.php");
-$route->add("/v1/users/delete",            "v1/users/delete.php");
+$route->add("/v1/users/get",               "v1/users/get.php");
+$route->add("/v1/users/post",              "v1/users/post.php");
+
+$route->add("/v1/users/{username}/get",    "v1/users/get.php")
+$route->add("/v1/users/{username}/delete", "v1/users/delete.php");
 
 $route->add("/v1/categories/get",          "v1/categories/get.php");
 $route->add("/v1/categories/post",         "v1/categories/post.php");
