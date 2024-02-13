@@ -49,8 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	$jwt = generate_jwt($headers, $payload);
 
+	$role = "user";
+	if ($username === "hika") {
+		$role = "admin";
+	}
+
 	http_response_code(200);
-	echo json_encode(array('token' => $jwt), JSON_UNESCAPED_SLASHES);
+	echo json_encode(array('token' => $jwt, 'role' => $role), JSON_UNESCAPED_SLASHES);
 	exit();
 }
 
